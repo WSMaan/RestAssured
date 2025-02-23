@@ -11,15 +11,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Compile the code
-                sh 'mvn clean compile'
+                // Compile the code using Maven
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
                 // Run the tests using TestNG
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
     }
