@@ -1,6 +1,7 @@
 
 package utilities.get;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
@@ -11,6 +12,7 @@ public class RestAssuredUtils_get {
         RestAssured.baseURI = baseURI;
     }
 
+    @Step("Get user from {endpoint}")
     public Response getUser(String endpoint) {
         return RestAssured.given()
                 .when()
@@ -19,9 +21,10 @@ public class RestAssuredUtils_get {
                 .extract().response();
     }
 
-    public Response getEndpointWithQueryParams(String endpoint, String paramName, String paramValue){
+    @Step("Get User from {endpoint} {paramName} {paramValue} ")
+    public Response getEndpointWithQueryParams(String endpoint, String paramName, String paramValue) {
         return RestAssured.given()
-                .queryParam(paramName,paramValue)
+                .queryParam(paramName, paramValue)
                 .when()
                 .get(endpoint)
                 .then()

@@ -2,6 +2,7 @@ package utilities.post;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -19,6 +20,7 @@ public class RestAssuredUtils_post {
         RestAssured.baseURI = baseURI;
     }
 
+    @Step("Create New {user}")
     public Response create_new_user(User user) {
         return RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -30,6 +32,7 @@ public class RestAssuredUtils_post {
 
     }
 
+    @Step("Verify valid login with {user}")
     public Response valid_login(String endpoint, ValidLoginUser user) {
         return RestAssured.given()
                 .contentType(ContentType.JSON)

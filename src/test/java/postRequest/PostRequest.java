@@ -1,5 +1,9 @@
 package postRequest;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -22,12 +26,16 @@ public class PostRequest {
     RestAssuredUtils_post restAssuredUtils_post;
 
     @BeforeClass
+    @Story("SetUp Base URI")
     public void setUp() {
         restAssuredUtils_post = new RestAssuredUtils_post();
         restAssuredUtils_post.setBaseURI("https://reqres.in/");
     }
 
     @Test
+    @Story("Valid Login feature")
+    @Description("This request verifies Valid Login and captures the Response TOKEN")
+    @Severity(SeverityLevel.CRITICAL)
     public void validLogin() {
         validLoginUser = new ValidLoginUser("eve.holt@reqres.in", "cityslicka");
 
@@ -40,6 +48,9 @@ public class PostRequest {
     }
 
     @Test(dataProvider = "userDataProvider")
+    @Story("Create New Users")
+    @Description("This story creates new users with NAME and JOB fields")
+    @Severity(SeverityLevel.CRITICAL)
     public void create_new_user(String name, String job) {
         user = new User(name, job);
 
