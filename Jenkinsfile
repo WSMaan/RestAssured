@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Ensure Maven is configured in Jenkins
+        maven 'Maven' // Replace 'Maven' with the name of your Maven installation in Jenkins
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,18 +23,23 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Run the tests using TestNG
+                // Run the tests and generate Allure results
                 bat 'mvn test'
+            }
+        }
+
+        stage('Allure Report') {
+            steps {
+                // Generate and publish Allure report
+                allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
             }
         }
     }
 
     post {
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed!'
+        always {
+            // Clean up workspace after the build
+            cleanWs()
         }
     }
 }
